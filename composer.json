@@ -1,0 +1,20 @@
+{
+    "name": "micro/pages",
+    "description": "Simple URL to page delegation",
+    "authors": [
+        {
+            "name": "Sebastiano Bellinzis",
+            "email": "mail@sebastiano.me"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/support": "4.0.x"
+    },
+    "autoload": {
+        "psr-0": {
+            "Micro\\Pages": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}

@@ -1,6 +1,9 @@
 Micro Pages
 ===========
 
+[![Latest Stable Version](https://poser.pugx.org/micro/pages/v/stable.png)](https://packagist.org/packages/micro/pages)
+[![Total Downloads](https://poser.pugx.org/micro/pages/downloads.png)](https://packagist.org/packages/micro/pages)
+
 Micro Pages is an component to translate URL slugs `http://domain.tld/slug-1/slug-2/slug-3` and find the respective resources.
 
 # Drivers working on

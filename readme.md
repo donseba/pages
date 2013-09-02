@@ -87,3 +87,22 @@ See the config file for the json file location :
     }
 }]
 ```
+
+### Database Driver
+Mandatory of this driver is that it needs an active database connection.
+
+In the config you need to provite the table to look for, and asign the table fields. 
+This may be different if you are comming from another system. 
+
+As long as you are using eloquent this should work fluent-ly ;)
+
+```
+    'database' => array(
+            'table'       => 'pages',
+            'id'          => 'id',
+            'parent_id'   => 'parent_id',
+            'language_id' => 'language_id',
+            'title'       => 'title',
+            'content'     => 'content'
+        ),
+```

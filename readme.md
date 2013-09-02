@@ -1,22 +1,89 @@
 Micro Pages
 ===========
 
-* INSTALLATION
+Micro Pages is an component to translate URL slugs `http://domain.tld/slug-1/slug-2/slug-3` and find the respective resources.
 
-Providers : 'Micro\Pages\PagesServiceProvider',
-Facades   : 'Pages' => 'Micro\Pages\Support\Facades\Pages'
+# Drivers working on
+* Json -> Local json file with all page content
+ 
+# Drivers to come
+* JsonE    -> fetch results from external Json source
+* XML      -> For the enterprise ^-^
+* Database -> use the database connection to get contents relative to the slug.
+ 
+# Installation in Laravel 4.x
 
-At the end of the routes add :
+Add provider to the Providers array `app/config/app.php`
+```
+    'Micro\Pages\PagesServiceProvider',
+```
 
+Add Facade to the Facades array `app/config/app.php`
+```
+    'Micro\Pages\Support\Facades\Pages',
+```
 
-Route::any('{all}', function()
-{
-    $page = Pages::getPage();
+Add the following in your `app/routes.php` 
+
+best would be to add this at the end. This will CATCH all routes.
+
+```
+Route::any('{all}', function() { 
+    $page = Pages::getPage(); 
+    
     return View::make('base', ( is_array($page) ? $page : array() ) );
-
+    
 })->where('all', '.*');
+```
 
+Replace `base` with the view you want to use for your pages. For now $page will consist of the following : 
 
-For now ONLY json file supported. Database will follow soon.
+```
+$page = array(
+    'id'        => (int)    1
+    'parent_id' => (int)    0,
+    'public'    => (int)    1,
+    'title'     => (string) 'Page title',
+    'slug'      => (string) 'page-slug',
+    'content'   => (string) 'The content of your page',
+);
+```
 
-more documentation will follow soon.
+# Examples
+### JSON Configuration File 
+See the config file for the json file location : 
+
+```
+[{
+    "en" => {
+        "1" => {
+            "parent_id" => "0"
+            "slug"      => "one",
+            "title"     => "Title of page one"
+            "content"   => "Some content for the first page"
+            "public"    => "1"
+        },
+        "2" => {
+            "parent_id" => "1"
+            "slug"      => "two",
+            "title"     => "Title of second page"
+            "content"   => "Some content for the third page <br/> And additional line of text"
+            "public"    => "1"
+        },
+        "3" => {
+            "parent_id" => "2"
+            "slug"      => "three",
+            "title"     => "Title of page three"
+            "content"   => "Some content for the third page"
+            "public"    => "0"
+        },
+        "4" => {
+            "parent_id" => "0"
+            "slug"      => "four",
+            "title"     => "Title of page four"
+            "content"   => "Some content for the fourth page"
+            "public"    => "1"
+        }
+    }
+}]
+```

@@ -1,6 +1,8 @@
 {
     "name": "micro/pages",
     "description": "Simple URL to page delegation",
+    "keywords": ["laravel","pages"],
+    "license": "MIT",
     "authors": [
         {
             "name": "Sebastiano Bellinzis",

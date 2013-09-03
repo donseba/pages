@@ -32,9 +32,8 @@ best would be to add this at the end. This will CATCH all routes.
 
 ```
 Route::any('{all}', function() { 
-    $page = Pages::getPage(); 
-    
-    return View::make('base', ( is_array($page) ? $page : array() ) );
+
+    return View::make('base')->with('pages', Pages::getPage() );
     
 })->where('all', '.*');
 ```

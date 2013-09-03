@@ -8,11 +8,11 @@ Micro Pages is an component to translate URL slugs `http://domain.tld/slug-1/slu
 
 # Drivers working on
 * Json -> Local json file with all page content
+* Database -> use the database connection to get contents relative to the slug.
  
 # Drivers to come
 * JsonE    -> fetch results from external Json source
 * XML      -> For the enterprise ^-^
-* Database -> use the database connection to get contents relative to the slug.
  
 # Installation in Laravel 4.x
 

@@ -27,6 +27,7 @@ return array(
             'public'      => 'public',
             'language_id' => 'language_id',
             'title'       => 'title',
+            'slug'        => 'slug',
             'content'     => 'content'
         ),
 

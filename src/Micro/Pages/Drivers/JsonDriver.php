@@ -31,7 +31,7 @@ class JsonDriver implements PageDriverInterface{
     }
 
 
-    public function page( $current, $parent = '' )
+    public function page( $current, $parents = array() )
     {
         if( is_array( $this->data ) )
         {
@@ -39,11 +39,11 @@ class JsonDriver implements PageDriverInterface{
             {
                 if( $page['slug'] == $current && 1 == $page['public'] )
                 {
-                    if( '' == $parent && 0 == $page['parent'] ) // no parent slug is provided, so parent should be 0
+                    if( empty($parents) && 0 == $page['parent'] ) // no parent slug is provided, so parent should be 0
                     {
                         return $page;
                     }
-                    elseif( (0 < $page['parent'] ) && $this->data[ $page['parent'] ]['slug'] == $parent )
+                    elseif( (0 < $page['parent'] ) && $this->data[ $page['parent'] ]['slug'] == head($parents) )
                     {
                         return $page;
                     }

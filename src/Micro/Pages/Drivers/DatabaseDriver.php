@@ -28,40 +28,41 @@ class DatabaseDriver implements PageDriverInterface{
     }
 
 
-    public function page( $current, $parent = '' )
+    public function page( $current, $parents = array() )
     {
-        $page = DB::table( $this->config['table'] )
-                    ->where( $this->config['public'], '=', '1' )
-                    ->where( $this->config['slug'], '=', $current )
-                    ->first();
+        $base = DB::table( $this->config['table'].' AS p0' )
+            ->select( 'p0.*' )
+            ->where( 'p0.'.$this->config['public'], '=', '1' )
+            ->where( 'p0.'.$this->config['slug'], '=', $current );
 
-        if( is_array( $this->data ) )
+        if( !empty($parents) )
         {
-            foreach( $this->data AS $page )
-            {
-                if( $page['slug'] == $current && 1 == $page['public'] )
-                {
-                    if( '' == $parent && 0 == $page['parent'] ) // no parent slug is provided, so parent should be 0
-                    {
-                        return (object) $page;
-                    }
-                    elseif( (0 < $page['parent'] ) && $this->data[ $page['parent'] ]['slug'] == $parent )
-                    {
-                        return (object) $page;
-                    }
-                }
-            }
+            $allParents = array_values($parents);
+            foreach( $allParents AS $key => $parentSlug ){
 
-            return $this->noPage();
+                $base->join( $this->config['table'].' AS p'.($key+1), function($join) use ($parentSlug, $key)
+                {
+                    $join->on( 'p'.$key.'.'.$this->config['parent_id'], '=', 'p'.($key+1).'.'.$this->config['id'] );
+                })->where( 'p'.($key+1).'.'.$this->config['slug'], '=', $parentSlug );
+            }
         }
+
+        $page = $base->first();
+
+        if( null != $page )
+        {
+            return $page;
+        }
+
+        return $this->noPage();
     }
 
 
     public function noPage()
     {
-        if( is_array( $this->data ) && array_key_exists('P404', $this->data) )
+        if( is_array( $this->config ) && array_key_exists('P404', $this->config ) )
         {
-            return $this->data['P404'];
+            return $this->config['P404'];
         }
 
         return (object) array(

@@ -69,11 +69,12 @@ class Pages {
         {
             foreach( $parts AS $key => $part )
             {
-                $parentSlug = ( isset($parts[$key-1]) ? $parts[$key-1] : null );
-
-                if( null !== $parentSlug )
+                if( isset($parts[$key-1]) )
                 {
-                    $result = $this->pageWithParent( $part, $parentSlug );
+                    unset( $parts[$key] );
+                    $parents = $parts;
+
+                    $result = $this->pageWithParent( $part, $parents );
                 }
                 else
                 {
@@ -130,10 +131,9 @@ class Pages {
     }
 
 
-    public function pageWithParent( $current, $parent )
+    public function pageWithParent( $current, $parents )
     {
-        $result = $this->driverInstance->page( $current, $parent );
-
+        $result = $this->driverInstance->page( $current, $parents );
 
         return $this->processResult( $result );
     }

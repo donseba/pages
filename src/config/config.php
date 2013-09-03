@@ -5,7 +5,7 @@ return array(
 
     'languages' => array( 'en' => 'English' ),
 
-    'driver' => 'json',
+    'driver' => 'database',
 
     'driverConfig' => array(
 
@@ -21,8 +21,10 @@ return array(
 
         // ToDo Database with one table
         'database' => array(
+            'table'       => 'pages',
             'id'          => 'id',
             'parent_id'   => 'parent_id',
+            'public'      => 'public',
             'language_id' => 'language_id',
             'title'       => 'title',
             'content'     => 'content'
